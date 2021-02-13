@@ -5,7 +5,7 @@ public class CameraControl : MonoBehaviour
     public float m_DampTime = 0.2f;                 
     public float m_ScreenEdgeBuffer = 4f;           
     public float m_MinSize = 6.5f;                  
-    [HideInInspector] public Transform[] m_Targets; 
+    public Transform[] m_Targets; 
 
 
     private Camera m_Camera;                        
@@ -31,7 +31,10 @@ public class CameraControl : MonoBehaviour
     {
         FindAveragePosition();
 
+        //плавный переход из старой позиции в новую
         transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
+
+        //transform.position = m_DesiredPosition; //менее красиво, но работает
     }
 
 
@@ -62,6 +65,8 @@ public class CameraControl : MonoBehaviour
     {
         float requiredSize = FindRequiredSize();
         m_Camera.orthographicSize = Mathf.SmoothDamp(m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
+
+        //m_Camera.orthographicSize = requiredSize;
     }
 
 
